@@ -1,0 +1,17 @@
+{
+  "name": "research-skills",
+  "version": "0.1.0",
+  "description": "Six Claude Code skills for running computational research projects reproducibly: workspace layout, experiment logs, decision records, hash-pinned artifact archives, a debugging discipline for numerical code, and a one-page action-brief format.",
+  "author": {
+    "name": "Jakub Krajniak",
+    "url": "https://jkrajniak.github.io"
+  },
+  "skills": [
+    "./skills/research-project-init",
+    "./skills/research-experiment-log",
+    "./skills/research-decision-record",
+    "./skills/research-artifact-archive",
+    "./skills/rigorous-debugging-discipline",
+    "./skills/research-action-brief"
+  ]
+}
