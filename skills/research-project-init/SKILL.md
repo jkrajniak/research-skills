@@ -1,6 +1,6 @@
 ---
 name: research-project-init
-description: Bootstraps the standard four-repo research workspace (code / paper / private research notebook / large artifacts) used across ML/OR/computational-science projects. Use when starting a new research project, or when an existing project's notes, code, and manuscript are tangled together in one repo and need separating.
+description: Bootstraps the standard four-repo research workspace (code / paper / private research notebook / large artifacts) used across ML/OR/computational-science projects. Use once a new research project has a one-page action brief with buy-in (see research-action-brief), or when an existing project's notes, code, and manuscript are tangled together in one repo and need separating.
 allowed-tools: [Read, Write, Bash]
 ---
 
@@ -20,6 +20,15 @@ Bootstraps the standard research workspace used across ML/OR research projects.
 ```
 
 ## Steps
+
+### 0. Write the action brief first
+
+Before creating a single directory, write the one-page action brief (see
+the `research-action-brief` skill): the question, the experiment, a staged
+plan, and exactly what's needed from collaborators. Circulate it and get a
+"go" before scaffolding anything below — the workspace and the proposal are
+both an investment; the brief is how you find out whether that investment
+is warranted while it's still cheap to redirect.
 
 ### 1. Create directories
 

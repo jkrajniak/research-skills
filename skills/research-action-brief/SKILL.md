@@ -1,20 +1,33 @@
 ---
 name: research-action-brief
-description: Lays out a one-page, circulable action brief for a research proposal or plan — a short form of a longer proposal document, built for a collaborator to skim in two minutes. Use when a longer proposal or plan needs a version other people will actually read, or when you need a concrete, staged ask from a collaborator or team.
+description: Lays out a one-page, circulable action brief — the standard way to start a new scientific research project, and also the short form of an existing longer proposal, built for a collaborator to skim in two minutes. Use when kicking off a new project and you want alignment and inputs before committing to workspace scaffolding or a full proposal, or when an existing longer proposal or plan needs a version other people will actually read.
 allowed-tools: [Read, Write, Bash]
 ---
 
 # Research Action Brief
 
-Produces a one-page (occasionally two) circulable brief that is the short
-form of a longer proposal or plan. The brief is not a summary of the long
-document — it exists to get a specific decision or specific inputs from a
-specific reader, fast.
+Produces a one-page (occasionally two) circulable brief. This is the
+**default first artifact of a new research project** — write it before the
+full proposal, before the workspace exists, before any code. It is cheap to
+write, cheap to revise, and it gets a collaborator's input or sign-off in the
+time it takes to read one page, instead of after they've read (or skipped)
+a ten-page document.
+
+It also works the other way round, as the short form of a proposal that
+already exists. Either way the brief is not a summary — it exists to get a
+specific decision or specific inputs from a specific reader, fast.
 
 ## When to use
 
-- A longer proposal (`proposal.md` / a grant draft / a design doc) exists,
-  but nobody besides its author has read it end to end
+- **Starting a new research project.** Write the brief first: the question,
+  the experiment, a staged plan, and exactly what you need from
+  collaborators — before running `research-project-init` to scaffold the
+  four-repo workspace, and before the full proposal document exists. The
+  brief is what you circulate to get a "yes, go ahead" or "here's what's
+  missing" before investing in either.
+- A longer proposal (`proposal.md` / a grant draft / a design doc) already
+  exists, but nobody besides its author has read it end to end — distill it
+  into a brief instead of asking people to read the whole thing.
 - You need a concrete list of inputs from a collaborator before work can
   start (data, a judgment call, sign-off on a stage plan)
 - A plan has stages whose dependencies matter more than a calendar, and
@@ -22,11 +35,17 @@ specific reader, fast.
 
 ## Principles
 
-- **It is a twin, not a summary.** The brief and the long document should
-  say the same thing; the brief just omits statistical detail, full
-  prior-art discussion, and anything that isn't needed to make the decision
-  at hand. Keep those in the long document and say so explicitly, so the
-  reader knows where to look for more.
+- **It comes first, not last.** For a new project, the brief is written
+  before the long proposal, before the workspace, before any code — it is
+  the cheapest way to find out whether the idea survives contact with a
+  collaborator's first question. Only write the long document once the
+  brief has gotten a "go."
+- **When a long document does exist, the brief is its twin, not a
+  summary.** The brief and the long document should say the same thing; the
+  brief just omits statistical detail, full prior-art discussion, and
+  anything that isn't needed to make the decision at hand. Keep those in the
+  long document and say so explicitly, so the reader knows where to look for
+  more.
 - **No calendar.** Order stages by dependency, not by date. Calendar
   planning is a separate conversation that happens after the team agrees
   on the sequence — putting dates in the brief invites the wrong argument.
