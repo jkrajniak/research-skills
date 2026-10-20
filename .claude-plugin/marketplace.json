@@ -1,8 +1,8 @@
 {
   "name": "research-skills",
   "metadata": {
-    "description": "Skills for running computational research projects reproducibly with Claude Code: start with a one-page action brief, bootstrap the workspace, then keep every run, decision, and result traceable.",
-    "version": "0.2.0",
+    "description": "Skills for running computational research projects reproducibly with Claude Code: start with a one-page action brief, bootstrap the workspace, keep every run, decision, and result traceable, then write a consistent paper from a claim ledger and numbers registry.",
+    "version": "0.3.0",
     "homepage": "https://github.com/jkrajniak/research-skills"
   },
   "owner": {
@@ -12,7 +12,7 @@
   "plugins": [
     {
       "name": "research-skills",
-      "description": "Six skills for reproducible computational research: action brief, project init, experiment logs, decision records, artifact archiving, debugging discipline",
+      "description": "Eight skills for reproducible computational research: action brief, project init, experiment logs, decision records, artifact archiving, debugging discipline, paper outline, paper audit",
       "source": "./",
       "strict": false,
       "skills": [
@@ -21,7 +21,9 @@
         "./skills/research-experiment-log",
         "./skills/research-decision-record",
         "./skills/research-artifact-archive",
-        "./skills/rigorous-debugging-discipline"
+        "./skills/rigorous-debugging-discipline",
+        "./skills/research-paper-outline",
+        "./skills/research-paper-audit"
       ]
     }
   ]

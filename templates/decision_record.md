@@ -15,6 +15,10 @@ What did we choose?
 
 Why is this the right choice now?
 
+## Paper impact
+
+Claim IDs and sections affected (or "None"):
+
 ## Consequences
 
 - Positive:

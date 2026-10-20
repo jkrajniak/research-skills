@@ -50,6 +50,15 @@ What specific question does this run answer?
 - Key numbers (accuracy, gap, runtime, etc.)
 - Any anomalies or surprises
 
+## Paper-facing numbers
+One line per number the paper may quote, in registry form. State exactly
+what each is (single run or mean, which seeds, which window) so two runs of
+the "same" quantity get two keys, not one ambiguous value.
+
+| Key | Value | Unit | Precision | What it is |
+|---|---|---|---|---|
+| `<system>.<quantity>` | `<value>` | `<unit>` | `<fmt, e.g. {:.0f}>` | `<mean of 3 seeds, 1 ps ramp>` |
+
 ## Interpretation
 - What does this mean for the paper claim?
 - Does it confirm or contradict the hypothesis?
@@ -76,7 +85,10 @@ Append a row to `<proj>-research/artifacts_index.md`:
 ### 5. Update EVIDENCE_BASE.md if this is paper-facing
 
 If the outputs will back a paper claim, add or update an entry in
-`<proj>-research/experiments/EVIDENCE_BASE.md`.
+`<proj>-research/experiments/EVIDENCE_BASE.md` (with the claim ID from
+`<proj>-paper/claims.md`), and copy the "Paper-facing numbers" rows into
+`<proj>-paper/numbers.json` with this note as their `source`. Never type a
+paper number from memory; copy it from here.
 
 ## Rules
 
@@ -84,3 +96,5 @@ If the outputs will back a paper claim, add or update an entry in
 - Never leave the Code Commit field blank.
 - SHA-256 is mandatory for every artifact that will back a paper claim.
 - Keep observations factual; move interpretation to the Interpretation section.
+- Every number the paper may quote appears in "Paper-facing numbers" with
+  its exact meaning. If a re-run changes it, update the row and the registry.

@@ -1,0 +1,23 @@
+{
+  "_readme": "One name per concept. 'banned' variants are flagged wherever they appear. 'internal_ids' are lab/file names that must not reach the prose.",
+  "terms": [
+    {
+      "canonical": "archived topology",
+      "definition": "the bonded topology shipped with the published reference runs",
+      "banned": ["reference topology", "topology of the reference", "archived reference topology"]
+    },
+    {
+      "canonical": "excluded pairs",
+      "definition": "atom pairs removed from the RDF by the topology exclusions",
+      "banned": ["without the intramolecular pairs", "topology exclusions"]
+    }
+  ],
+  "internal_ids": [
+    {"id": "rim135", "public": "the epoxy network"}
+  ],
+  "structure": {
+    "_readme": "Define every segmentation ONCE and reuse it. Two parallel schemes for the same workflow is the commonest glossary bug.",
+    "stages": ["CG equilibration", "hybrid build", "backmapping and AT production"],
+    "validation_levels": ["generator", "dynamics", "structure"]
+  }
+}

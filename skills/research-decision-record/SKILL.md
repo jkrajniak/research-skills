@@ -45,6 +45,11 @@ What did we choose? State it in one clear sentence.
 
 Why is this the right choice now? Include trade-offs considered.
 
+## Paper impact
+
+Claim IDs (from `<proj>-paper/claims.md`) and sections whose text or numbers
+change because of this decision. "None" is a valid answer; blank is not.
+
 ## Consequences
 
 - Positive: what this enables or simplifies
@@ -74,3 +79,5 @@ Why is this the right choice now? Include trade-offs considered.
 - One decision per file — don't bundle multiple unrelated choices.
 - Always state what was NOT chosen (the rejected alternatives).
 - Keep records even for "obvious" choices — reviewers will ask.
+- If "Paper impact" is not "None", re-run `research-paper-audit` after the
+  manuscript is updated.

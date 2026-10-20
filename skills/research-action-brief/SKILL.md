@@ -89,7 +89,13 @@ Compile and check it stays to the intended page count:
 pdflatex -interaction=nonstopmode action_brief.tex
 ```
 
-### 3. Circulate both forms
+### 3. Seed the claim ledger
+
+Once the brief has a "go", copy its question and each stage's result into
+the first rows of `<proj>-paper/claims.md` (see `research-paper-outline`).
+The brief's stage end-conditions are the first "limits" rows.
+
+### 4. Circulate both forms
 
 Send the `.md` where plain text is easier to reply inline to (email,
 chat), and the `.pdf` where the visual layout carries meaning (a printed
