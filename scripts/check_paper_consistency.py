@@ -13,7 +13,7 @@ or Claude can judge it. A clean run means "no mechanical defects", not "the
 paper is consistent"; the semantic pass in research-paper-audit covers the rest.
 
 Severity:
-  ERROR  certainly wrong (unresolved ref, [?], registry macro missing, debris)
+  ERROR  certainly wrong (unresolved ref, placeholder \\cite, registry macro missing, debris)
   WARN   probably wrong (banned term, drifting number, duplicated sentence)
   INFO   worth a look (headline number repeated by hand, unused label)
 """
@@ -47,6 +47,9 @@ def strip_comment(line):
     return "".join(out)
 
 
+COMMENTS = []  # (file, lineno, comment text) of every % comment, for open-note detection
+
+
 def load_tex(path, seen=None):
     """Return a list of (file, lineno, text) with comments stripped and
     \\input files inlined."""
@@ -58,6 +61,8 @@ def load_tex(path, seen=None):
     rows = []
     for n, raw in enumerate(path.read_text(errors="replace").splitlines(), 1):
         line = strip_comment(raw)
+        if len(line) < len(raw.rstrip()) and "%" in raw[len(line):]:
+            COMMENTS.append((str(path), n, raw[len(line) + 1:].strip()))
         m = INPUT_RE.search(line)
         if m:
             sub = path.parent / m.group(1)
@@ -120,6 +125,34 @@ def check_debris(rows, fnd):
                 fnd.add(sev, "debris", "%s:%d" % (f, n), "%s: ...%s..." % (why, ctx))
 
 
+def check_open_notes(fnd):
+    """Author-to-author notes left in comments (% JK: ..., % TODO ...)."""
+    for f, n, text in COMMENTS:
+        if re.match(r"[A-Z]{2,4}\s*:", text) or re.match(r"(?:TODO|FIXME|NOTE|XXX)\b", text):
+            fnd.add("WARN", "open-note", "%s:%d" % (f, n), "unresolved note in source: %s" % text[:100])
+
+
+VERSION_RE = re.compile(r"\bv(\d+\.\d+(?:\.\d+)?)\b")
+
+
+def check_versions(rows, bib_dirs, bib_names, fnd):
+    """The same software must carry one version string across text and .bib."""
+    found = defaultdict(list)
+    for f, n, t, _ in rows:
+        for m in VERSION_RE.finditer(t.replace("\\texttt{", "").replace("}", " ")):
+            found[m.group(1)].append("%s:%d" % (f, n))
+    for b in bib_names:
+        for base in bib_dirs:
+            q = (base / b).with_suffix(".bib") if not b.endswith(".bib") else base / b
+            if q.exists():
+                for i, line in enumerate(q.read_text(errors="replace").splitlines(), 1):
+                    for m in VERSION_RE.finditer(line):
+                        found[m.group(1)].append("%s:%d" % (q, i))
+    if len(found) > 1:
+        detail = "; ".join("v%s at %s" % (v, w[0]) for v, w in sorted(found.items()))
+        fnd.add("WARN", "versions", "multiple", "several version strings appear: %s. Same software? One version everywhere." % detail)
+
+
 def check_refs(rows, bib_dirs, fnd):
     labels, refs, cites = {}, defaultdict(list), defaultdict(list)
     bib_files = []
@@ -134,6 +167,9 @@ def check_refs(rows, bib_dirs, fnd):
                 cites[key.strip()].append("%s:%d" % (f, n))
         for m in BIB_RE.finditer(t):
             bib_files += [b.strip() for b in m.group(1).split(",")]
+    for key, where in cites.items():
+        if re.search(r"\s", key):
+            fnd.add("ERROR", "refs", where[0], "\\cite key '%s' is a placeholder (renders as [?])" % key)
     for key, where in refs.items():
         if key not in labels:
             fnd.add("ERROR", "refs", where[0], "\\ref to undefined label '%s'" % key)
@@ -150,11 +186,11 @@ def check_refs(rows, bib_dirs, fnd):
                     bib_keys |= set(re.findall(r"@\w+\s*\{\s*([^,\s]+)\s*,", q.read_text(errors="replace")))
     if bib_keys:
         for key, where in cites.items():
-            if key not in bib_keys:
+            if key not in bib_keys and not re.search(r"\s", key):
                 fnd.add("ERROR", "refs", where[0], "\\cite key '%s' not in the .bib file" % key)
         for key in sorted(bib_keys - set(cites)):
             fnd.add("INFO", "refs", "bib", "bib entry '%s' is never cited" % key)
-    return labels
+    return labels, bib_files
 
 
 NUM_TOKEN = re.compile(
@@ -259,7 +295,7 @@ def check_numbers(rows, registry, fnd, repeat_sections):
     for (val, u), secs in spread.items():
         if len(secs) >= repeat_sections:
             fnd.add("INFO", "numbers", where[(val, u)],
-                    "%s %s appears by hand in %d sections (%s). Make it a registry value, or state it once and refer back." %
+                    "%g %s appears by hand in %d sections (%s). Make it a registry value, or state it once and refer back." %
                     (val, u, len(secs), ", ".join(sorted(secs))))
 
 
@@ -377,7 +413,9 @@ def main():
     base = Path(a.tex).parent
 
     check_debris(rows, fnd)
-    labels = check_refs(rows, [base, Path(".")], fnd)
+    labels, bib_files = check_refs(rows, [base, Path(".")], fnd)
+    check_open_notes(fnd)
+    check_versions(rows, [base, Path(".")], bib_files, fnd)
     check_numbers(rows, registry, fnd, a.repeat_sections)
     check_duplicates(rows, fnd, a.dup_threshold)
     if a.glossary:

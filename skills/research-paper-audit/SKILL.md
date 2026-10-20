@@ -32,9 +32,11 @@ any ERROR (`--strict`: on WARN too). What it checks:
 | Check | Catches |
 |---|---|
 | debris | `[?]`, `??`, `TODO`, sentences cut after a function word ("for the. melamine"), doubled words, revision-history language ("the version first submitted") |
-| refs | undefined `\ref`/`\cite`, unused labels and bib entries |
+| refs | undefined `\ref`/`\cite`, placeholder keys like `\cite{need citation}`, unused labels and bib entries |
 | numbers | `\num{}` keys missing from the registry; the same quantity written with different values in different places; hand-typed copies of registry values; one number retyped in 3+ sections |
 | duplicate | near-identical sentences in different sections |
+| open-note | unresolved `% XX:` author notes left in the source (each is an open to-do: resolve or delete) |
+| versions | more than one software version string across text and `.bib` |
 | glossary | banned term variants; internal ids in prose |
 | claims | ledger rows with no evidence, or pointing at labels that do not exist |
 
