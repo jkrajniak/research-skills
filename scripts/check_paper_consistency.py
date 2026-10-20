@@ -183,6 +183,12 @@ def check_refs(rows, bib_dirs, fnd):
             for base in bib_dirs:
                 q = base / cand
                 if q.exists():
+                    depth = 0
+                    for i, line in enumerate(q.read_text(errors="replace").splitlines(), 1):
+                        depth += line.count("{") - line.count("}")
+                        if depth < 0:
+                            fnd.add("ERROR", "refs", "%s:%d" % (q, i), "unbalanced '}' in .bib (breaks BibTeX for the entries after it)")
+                            depth = 0
                     bib_keys |= set(re.findall(r"@\w+\s*\{\s*([^,\s]+)\s*,", q.read_text(errors="replace")))
     if bib_keys:
         for key, where in cites.items():
