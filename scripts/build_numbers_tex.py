@@ -11,6 +11,7 @@ Registry format (JSON object, key -> entry):
     "dodecane.peak_T": {
       "value": 1913,            # number, required
       "fmt": "{:.0f}",          # Python format, default "{:g}"
+      "tex": "seven",           # optional literal; overrides value/fmt/unit
       "unit": "K",              # optional; appended as \\,K (math-safe, siunitx-free)
       "source": "experiments/20260508_dodecane_ramp.md",   # required
       "sha256": "<archive hash>"                           # optional but encouraged
@@ -26,6 +27,8 @@ UNIT_SEP = r"\,"
 
 
 def render(entry):
+    if "tex" in entry:  # literal override, e.g. "seven" for a count written in words
+        return entry["tex"]
     fmt = entry.get("fmt", "{:g}")
     text = fmt.format(entry["value"])
     # Typographic minus and thousands thin-space, so tables and prose agree.

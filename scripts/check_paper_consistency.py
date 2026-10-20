@@ -59,7 +59,10 @@ def load_tex(path, seen=None):
         return []
     seen.add(path)
     rows = []
-    for n, raw in enumerate(path.read_text(errors="replace").splitlines(), 1):
+    lines = path.read_text(errors="replace").splitlines()
+    if lines and lines[0].startswith("% Generated"):
+        return []  # generated include (numbers.tex): not prose, not hand-edited
+    for n, raw in enumerate(lines, 1):
         line = strip_comment(raw)
         if len(line) < len(raw.rstrip()) and "%" in raw[len(line):]:
             COMMENTS.append((str(path), n, raw[len(line) + 1:].strip()))
@@ -146,6 +149,8 @@ def check_versions(rows, bib_dirs, bib_names, fnd):
             q = (base / b).with_suffix(".bib") if not b.endswith(".bib") else base / b
             if q.exists():
                 for i, line in enumerate(q.read_text(errors="replace").splitlines(), 1):
+                    if re.match(r"\s*note\s*=", line):
+                        continue
                     for m in VERSION_RE.finditer(line):
                         found[m.group(1)].append("%s:%d" % (q, i))
     if len(found) > 1:
@@ -187,7 +192,7 @@ def check_refs(rows, bib_dirs, fnd):
                     for i, line in enumerate(q.read_text(errors="replace").splitlines(), 1):
                         depth += line.count("{") - line.count("}")
                         if depth < 0:
-                            fnd.add("ERROR", "refs", "%s:%d" % (q, i), "unbalanced '}' in .bib (breaks BibTeX for the entries after it)")
+                            fnd.add("ERROR", "refs", "%s:%d" % (q, i), "stray '}' in .bib between entries (remove it; BibTeX may warn or skip entries)")
                             depth = 0
                     bib_keys |= set(re.findall(r"@\w+\s*\{\s*([^,\s]+)\s*,", q.read_text(errors="replace")))
     if bib_keys:
@@ -361,7 +366,11 @@ def check_duplicates(rows, fnd, threshold):
                     (100 * inter / union, a[0][:70], b[0][:70]))
 
 
+CODE_RE = re.compile(r"\\(?:label|ref|eqref|cref|autoref|includegraphics|input|include|url)(?:\[[^\]]*\])?\{[^}]*\}")
+
+
 def check_glossary(rows, glossary, fnd):
+    rows = [(f, n, CODE_RE.sub(" ", t), s) for f, n, t, s in rows]  # labels are not prose
     for entry in glossary.get("terms", []):
         canon = entry["canonical"]
         for banned in entry.get("banned", []):
