@@ -55,8 +55,12 @@ Append to `<proj>-research/artifacts_index.md`:
 If this archive will be the source for paper numbers:
 
 ```markdown
-| <role, e.g. "Final benchmark archive"> | `<path>` | `<sha256>` | ✓ YYYY-MM-DD |
+| <role, e.g. "Final benchmark archive"> | `<path>` | `<sha256>` | ✓ YYYY-MM-DD | <claim IDs, e.g. C3, C7> |
 ```
+
+The claim IDs come from `<proj>-paper/claims.md` (see
+`research-paper-outline`). They tell a later reader, and
+`research-paper-audit`, which sentences this archive backs.
 
 Mark older superseded entries with `(superseded)` and move them to
 the "Superseded" section of EVIDENCE_BASE.md.
@@ -86,6 +90,7 @@ Examples:
 | Config JSON used for the run | Raw solver log files (unless small) |
 | The run script (snapshot) | Instance archives (reference separately) |
 | Summary JSON / LaTeX tables | Intermediate checkpoint files |
+| `numbers.json` fragment: every paper-facing value derived from this run, with its fmt and unit | |
 
 ## Rules
 
@@ -93,3 +98,5 @@ Examples:
 - SHA-256 file must be stored next to the archive (same directory).
 - The archive content must be sufficient to reproduce any derived table or figure.
 - Superseded archives are kept for audit; mark them clearly in EVIDENCE_BASE.md.
+- When an archive is superseded, re-point every `numbers.json` entry whose
+  `sha256` it held, rebuild `numbers.tex`, and run `research-paper-audit`.

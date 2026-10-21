@@ -25,6 +25,12 @@ What question does this run answer?
 
 -
 
+## Paper-facing numbers
+
+| Key | Value | Unit | Precision | What it is |
+|---|---|---|---|---|
+|  |  |  |  |  |
+
 ## Interpretation
 
 -

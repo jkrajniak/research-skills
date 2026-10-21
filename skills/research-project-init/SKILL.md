@@ -14,7 +14,8 @@ Bootstraps the standard research workspace used across ML/OR research projects.
 <workspace>/
   AGENTS.md                    ← AI context file (entry point for every agent)
   <proj>-code/                 ← public implementation (git, runnable)
-  <proj>-paper/                ← manuscript (LaTeX, figures, tables)
+  <proj>-paper/                ← manuscript (LaTeX, figures, tables,
+                                 claims.md, numbers.json, glossary.json)
   <proj>-research/             ← private lab notebook (plans, decisions, logs)
   <proj>-artifacts/            ← large generated files, outside git
 ```
@@ -58,6 +59,11 @@ Create `<proj>-research/artifacts_index.md` as a Markdown table:
 Create `<proj>-research/experiments/EVIDENCE_BASE.md` pinning which
 artifact archives back each paper claim (fill in as experiments complete).
 
+Create the paper-consistency files in `<proj>-paper/` (see
+`research-paper-outline`): `claims.md`, `numbers.json`, `glossary.json`,
+copied from `../templates/paper_claims.md`, `paper_numbers.json`, and
+`paper_glossary.json`. Seed the first claim rows from the action brief.
+
 ### 4. Add integrity check script
 
 Copy `../scripts/check_evidence_integrity.sh` from this plugin into
@@ -65,6 +71,9 @@ Copy `../scripts/check_evidence_integrity.sh` from this plugin into
 - Reads SHA-256 entries from EVIDENCE_BASE.md
 - Runs `shasum -a 256 -c` against each pinned archive
 - Exits non-zero on any mismatch
+
+Also copy `../scripts/build_numbers_tex.py` and
+`../scripts/check_paper_consistency.py` into `<proj>-paper/scripts/`.
 
 ### 5. Copy templates
 
@@ -86,5 +95,7 @@ git -C ${PROJECT}-research init
 - NEVER commit large archives to git — store in `<proj>-artifacts/`.
 - ALWAYS record the code commit SHA in every experiment note.
 - ALWAYS compute SHA-256 for every artifact archive.
+- NEVER retype a paper number: it lives in `numbers.json` and enters the
+  text as `\num{key}`.
 - Keep AGENTS.md current — it is the agent's entry point.
 - Promote code/configs only when stable; promote text/figures only when polished.

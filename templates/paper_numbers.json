@@ -1,0 +1,17 @@
+{
+  "_readme": "One entry per number the paper states. Type it here once; the manuscript uses \\num{key}. Keys: <system>.<quantity>. Every entry needs a source.",
+  "dodecane.peak_T": {
+    "value": 1913,
+    "fmt": "{:.0f}",
+    "unit": "K",
+    "source": "<proj>-research/experiments/YYYYMMDD_slug.md",
+    "sha256": "<archive sha256 from EVIDENCE_BASE.md>",
+    "note": "mean of 3 seeds, 1 ps ramp; the single-seed main run gives 1930"
+  },
+  "paper.n_systems": {
+    "value": 7,
+    "fmt": "{:d}",
+    "source": "claims.md#C1",
+    "note": "counts systems, not rows of Table 7 (PE is two models)"
+  }
+}
