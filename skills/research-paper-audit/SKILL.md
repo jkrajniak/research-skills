@@ -80,6 +80,8 @@ Read the PDF or source with these questions, and record each finding as
 
 ### 3. Cut repetition
 
+For a full cleanup pass (triaging inline notes, scripted edits, compile check, change log) use `research-manuscript-revision`; the rules below are the short form.
+
 For each fact told more than once, keep it at its **home** and replace the
 rest:
 

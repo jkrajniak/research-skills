@@ -1,7 +1,7 @@
 {
   "name": "research-skills",
-  "version": "0.3.0",
-  "description": "Eight Claude Code skills for running computational research projects reproducibly: start with a one-page action brief, bootstrap the workspace, keep every run, decision, and result traceable, and write the paper from a claim ledger and numbers registry that an audit skill checks for repetition and misaligned numbers.",
+  "version": "0.4.0",
+  "description": "Nine Claude Code skills for running computational research projects reproducibly: start with a one-page action brief, bootstrap the workspace, keep every run, decision, and result traceable, and write the paper from a claim ledger and numbers registry that an audit skill checks for repetition and misaligned numbers, and a revision skill applies safely.",
   "author": {
     "name": "Jakub Krajniak",
     "url": "https://jkrajniak.github.io"
@@ -14,6 +14,7 @@
     "./skills/research-artifact-archive",
     "./skills/rigorous-debugging-discipline",
     "./skills/research-paper-outline",
-    "./skills/research-paper-audit"
+    "./skills/research-paper-audit",
+    "./skills/research-manuscript-revision"
   ]
 }
